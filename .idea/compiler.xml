@@ -11,6 +11,7 @@
         <module name="Library" />
         <module name="Admin" />
         <module name="Customer" />
+        <module name="FoodShopOnline" />
       </profile>
     </annotationProcessing>
   </component>
