@@ -24,22 +24,26 @@ public class LoginController {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
     @GetMapping("/login")
-    public String loginForm(){
+    public String loginForm(Model model){
+        model.addAttribute("title","Login Admin");
         return "login";
     }
 
     @RequestMapping("/index")
-    public String home(){
+    public String home(Model model){
+        model.addAttribute("title","Home Admin");
         return "index";
     }
 
     @GetMapping("/register")
     public String register(Model model){
+        model.addAttribute("title","Dang ky Admin");
         model.addAttribute("adminDto",new AdminDto());
         return "register";
     }
     @GetMapping("/forgot-password")
     public String forgotPassword(Model model){
+        model.addAttribute("title","Quen mat khau");
         return "forgot-password";
     }
 
@@ -59,9 +63,7 @@ public class LoginController {
             Admin admin = adminService.findByUserName(username);
             if (admin != null){
                 model.addAttribute("adminDto",adminDto);
-//                redirectAttributes.addFlashAttribute("message","Email da ton tai");
                 System.out.println("Admin khong rong");
-//                session.setAttribute("message","Email da duoc dang ky truoc");
                 model.addAttribute("emailError", "Email da duoc dang ky truoc");
                 return "register";
             }
@@ -69,26 +71,17 @@ public class LoginController {
                 adminDto.setPassWord(passwordEncoder.encode(adminDto.getPassWord()));
                 adminService.save(adminDto);
                 System.out.println("Thanh cong");
-//                session.setAttribute("message", "Dang ky thanh cong");
                 model.addAttribute("success", "Dang ky thanh cong");
                 model.addAttribute("adminDto",adminDto);
-//                redirectAttributes.addFlashAttribute("message","Dang ky thanh cong");
             }else {
                 model.addAttribute("adminDto",adminDto);
-//                redirectAttributes.addFlashAttribute("message","Mat khau khong trung khop");
-//                session.setAttribute("message", "Mat khau khong trung khop");
                 model.addAttribute("passWordError","Mat khau khong trung khop");
                 System.out.println("Mat khau khong trung khop");
                 return "register";
             }
-//            adminService.save(adminDto);
-//            model.addAttribute("adminDto",adminDto);
-//            redirectAttributes.addFlashAttribute("message","Dang ky thanh cong");
-//            return "register";
+
         }catch (Exception e){
-//            redirectAttributes.addFlashAttribute("message","Error Server");
             e.printStackTrace();
-//            session.setAttribute("message","Error Server");
             model.addAttribute("errors","Error Server");
         }
         return "register";
