@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -26,6 +27,12 @@ public class LoginController {
     public String loginForm(){
         return "login";
     }
+
+    @RequestMapping("/index")
+    public String home(){
+        return "index";
+    }
+
     @GetMapping("/register")
     public String register(Model model){
         model.addAttribute("adminDto",new AdminDto());
@@ -39,10 +46,10 @@ public class LoginController {
     @PostMapping("/register-new")
     public String addNewAdmin(@Valid @ModelAttribute("adminDto") AdminDto adminDto,
                               BindingResult result,
-                              Model model,
-                              HttpSession session){
+                              Model model
+                              ){
         try {
-            session.removeAttribute("message");
+//            session.removeAttribute("message");
             if (result.hasErrors()){
                 model.addAttribute("adminDto",adminDto);
                 result.toString();
@@ -54,20 +61,23 @@ public class LoginController {
                 model.addAttribute("adminDto",adminDto);
 //                redirectAttributes.addFlashAttribute("message","Email da ton tai");
                 System.out.println("Admin khong rong");
-                session.setAttribute("message","Email da duoc dang ky truoc");
+//                session.setAttribute("message","Email da duoc dang ky truoc");
+                model.addAttribute("emailError", "Email da duoc dang ky truoc");
                 return "register";
             }
             if (adminDto.getPassWord().equals(adminDto.getRepPassWord())){
                 adminDto.setPassWord(passwordEncoder.encode(adminDto.getPassWord()));
                 adminService.save(adminDto);
                 System.out.println("Thanh cong");
-                session.setAttribute("message", "Dang ky thanh cong");
+//                session.setAttribute("message", "Dang ky thanh cong");
+                model.addAttribute("success", "Dang ky thanh cong");
                 model.addAttribute("adminDto",adminDto);
 //                redirectAttributes.addFlashAttribute("message","Dang ky thanh cong");
             }else {
                 model.addAttribute("adminDto",adminDto);
 //                redirectAttributes.addFlashAttribute("message","Mat khau khong trung khop");
-                session.setAttribute("message", "Mat khau khong trung khop");
+//                session.setAttribute("message", "Mat khau khong trung khop");
+                model.addAttribute("passWordError","Mat khau khong trung khop");
                 System.out.println("Mat khau khong trung khop");
                 return "register";
             }
@@ -78,7 +88,8 @@ public class LoginController {
         }catch (Exception e){
 //            redirectAttributes.addFlashAttribute("message","Error Server");
             e.printStackTrace();
-            session.setAttribute("message","Error Server");
+//            session.setAttribute("message","Error Server");
+            model.addAttribute("errors","Error Server");
         }
         return "register";
     }
