@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
+
+<head  th:replace="fragments :: header"></head>
+<body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul th:replace="fragments:: sidebar"></ul>
+        <!-- End of Sidebar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav th:replace="fragments:: topbar"></nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div th:if="${success}" class="text-center alert alert-success">
+                    <p th:text="${success}"></p>
+                </div>
+                <div th:if="${failed}" class="text-center alert alert-danger">
+                    <p th:text="${failed}"></p>
+                </div>
+                <div class="container-fluid">
+                    <div th:if="${size == 0}">
+                        <p>Không chứa món ăn nào</p>
+                    </div>
+                <!--Page Heading-->
+                    <table class="table table-striped" th:if="${size >0}">
+                        <thead>
+                        <tr>
+                            <th scope="col">Tên</th>
+                            <th scope="col">Loại</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Chất lượng</th>
+                            <th scope="col">Ảnh</th>
+                            <th scope="col">Chỉnh sửa</th>
+                            <th scope="col">Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th: th:each="product : ${products}">
+                            <th scope="row" th:text="${product.name}"></th>
+                            <td th:text="${product.category.name}">Mark</td>
+                            <td th:text="${product.costPrice}">Otto</td>
+                            <td th:text="${product.currentQuantity}">@mdo</td>
+                            <td><img></td>
+                            <td>@</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer th:replace="fragments::footer"></footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a th:replace="fragments :: scroll"> </a>
+
+
+    <!-- Logout Modal-->
+    <div th:replace="fragments :: logoutModal" ></div>
+
+    <!-- Bootstrap core JavaScript-->
+        <div th:replace="fragments:: script"></div>
+
+        <script th:src="@{/js/categories.js}"></script>
+
+    </div>
+</body>
+
+</html>
