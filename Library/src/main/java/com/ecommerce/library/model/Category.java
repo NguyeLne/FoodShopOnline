@@ -1,11 +1,9 @@
 package com.ecommerce.library.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.annotation.PostConstruct;
-import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -18,13 +16,8 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
     private String name;
-    private boolean is_Deleted;
-    private boolean is_Activated;
-
-    public Category(String name){
-        this.name = name;
-        this.is_Activated = true;
-        this.is_Deleted = false;
-    }
-
+    @Column(name = "is_activated")
+    private boolean activated;
+    @Column(name = "is_deleted")
+    private boolean deleted;
 }

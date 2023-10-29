@@ -8,12 +8,46 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 public interface ProductService {
-    List<ProductDto> findAll();
-    Product save(MultipartFile imageProduct,ProductDto productDto);
+    List<Product> findAll();
+
+    List<ProductDto> products();
+
+    List<ProductDto> allProduct();
+
+    Product save(MultipartFile imageProduct, ProductDto product);
+
     Product update(MultipartFile imageProduct, ProductDto productDto);
-    void deleteById(Long id);
+
     void enableById(Long id);
+
+    void deleteById(Long id);
+
     ProductDto getById(Long id);
-    Page<Product> pageProducts(int pageNo);
-    Page<Product> searchProducts(int pageNo ,String keyword);
+
+    Product findById(Long id);
+
+
+    List<ProductDto> randomProduct();
+
+    Page<ProductDto> searchProducts(int pageNo, String keyword);
+
+    Page<ProductDto> getAllProducts(int pageNo);
+
+    Page<ProductDto> getAllProductsForCustomer(int pageNo);
+
+
+    List<ProductDto> findAllByCategory(String category);
+
+
+    List<ProductDto> filterHighProducts();
+
+    List<ProductDto> filterLowerProducts();
+
+    List<ProductDto> listViewProducts();
+
+    List<ProductDto> findByCategoryId(Long id);
+
+    List<ProductDto> searchProducts(String keyword);
+
+
 }

@@ -5,35 +5,31 @@ import com.ecommerce.library.model.Admin;
 import com.ecommerce.library.repository.AdminRepository;
 import com.ecommerce.library.repository.RoleRepository;
 import com.ecommerce.library.service.AdminService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
 @Service
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
-//    @Autowired
-//    private BCryptPasswordEncoder passwordEncoder;
-    @Autowired
-    private AdminRepository adminRepository;
+    private final AdminRepository adminRepository;
+    private final RoleRepository roleRepository;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Override
-    public Admin findByUserName(String username) {
-        return adminRepository.findByUserName(username);
-    }
 
     @Override
     public Admin save(AdminDto adminDto) {
         Admin admin = new Admin();
         admin.setFirstName(adminDto.getFirstName());
         admin.setLastName(adminDto.getLastName());
-        admin.setUserName(adminDto.getUserName());
-        admin.setPassWord(adminDto.getPassWord());
+        admin.setUsername(adminDto.getUsername());
+        admin.setPassword(adminDto.getPassword());
         admin.setRoles(Arrays.asList(roleRepository.findByName("ADMIN")));
         return adminRepository.save(admin);
+    }
+
+    @Override
+    public Admin findByUsername(String username) {
+        return adminRepository.findByUsername(username);
     }
 }

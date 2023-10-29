@@ -1,10 +1,9 @@
 package com.ecommerce.library.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
@@ -18,16 +17,16 @@ public class Product {
     private Long id;
     private String name;
     private String description;
+    private int currentQuantity;
     private double costPrice;
     private double salePrice;
-    private int currentQuantity;
     @Lob
     @Column(columnDefinition = "MEDIUMBLOB")
     private String image;
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id", referencedColumnName = "category_id")
     private Category category;
-    private boolean is_Deleted;
-    private boolean is_Activated;
+    private boolean is_activated;
+    private boolean is_deleted;
 
 }

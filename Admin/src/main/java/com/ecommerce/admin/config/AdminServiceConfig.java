@@ -17,15 +17,15 @@ public class AdminServiceConfig implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Admin admin = adminRepository.findByUserName(username);
-        if(admin == null){
+        Admin admin = adminRepository.findByUsername(username);
+        if (admin == null) {
             throw new UsernameNotFoundException("Could not find username");
         }
         return new User(
-                admin.getUserName(),
-                admin.getPassWord(),
+                admin.getUsername(),
+                admin.getPassword(),
                 admin.getRoles()
-                .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()));
+                        .stream()
+                        .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList()));
     }
 }

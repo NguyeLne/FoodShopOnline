@@ -12,23 +12,24 @@ import java.util.List;
 
 public class AdminDetails implements UserDetails {
     private Admin admin;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : admin.getRoles()){
+        for(Role role : admin.getRoles()){
             authorities.add(new SimpleGrantedAuthority(role.getName()));
         }
-        return null;
+        return authorities;
     }
 
     @Override
     public String getPassword() {
-        return admin.getPassWord();
+        return admin.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return admin.getUserName();
+        return admin.getUsername();
     }
 
     @Override

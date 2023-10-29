@@ -2,98 +2,108 @@ package com.ecommerce.admin.controller;
 
 import com.ecommerce.library.model.Category;
 import com.ecommerce.library.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
+@RequiredArgsConstructor
 public class CategoryController {
-    @Autowired
-    private CategoryService categoryService;
-//    @GetMapping("/categories")
-//    public String categories(Model model, Principal principal){
-//        if (principal == null){
-//            return "redirect:/login";
-//        }
-//        List<Category> categories = categoryService.findAll();
-//        model.addAttribute("categories",categories);
-//        model.addAttribute("size", categories.size());
-//        model.addAttribute("title", "Category");
-//        model.addAttribute("categoryNew", new Category());
-//        return "categories";
-//    }
+
+    private final CategoryService categoryService;
+
     @GetMapping("/categories")
-    public String categories(Model model, Principal principal){
-        if(principal == null){
+    public String categories(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "redirect:/login";
         }
-        List<Category> categories = categoryService.findAll();
+        model.addAttribute("title", "Quản lý Cate");
+        List<Category> categories = categoryService.findALl();
         model.addAttribute("categories", categories);
         model.addAttribute("size", categories.size());
-        model.addAttribute("title", "Category");
         model.addAttribute("categoryNew", new Category());
         return "categories";
     }
-    @PostMapping("/add_category")
-    public String add(@ModelAttribute("categoryNew") Category category, RedirectAttributes attributes){
+
+    @PostMapping("/save-category")
+    public String save(@ModelAttribute("categoryNew") Category category, Model model, RedirectAttributes redirectAttributes) {
         try {
             categoryService.save(category);
-            attributes.addFlashAttribute("success", "Thêm mới thành công");
-        }catch (DataIntegrityViolationException e){
-            e.printStackTrace();
-            attributes.addFlashAttribute("failed", "Loại món bị trùng");
-        }
-        catch (Exception e){
-            e.printStackTrace();
-            attributes.addFlashAttribute("failed", "Error server");
+            model.addAttribute("categoryNew", category);
+            redirectAttributes.addFlashAttribute("success", "Thêm mới thành công!");
+        } catch (DataIntegrityViolationException e1) {
+            e1.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Lỗi trùng tên, vui lòng nhập lại!");
+        } catch (Exception e2) {
+            e2.printStackTrace();
+            model.addAttribute("categoryNew", category);
+            redirectAttributes.addFlashAttribute("error",
+                    "Error server");
         }
         return "redirect:/categories";
     }
+
     @RequestMapping(value = "/findById", method = {RequestMethod.PUT, RequestMethod.GET})
     @ResponseBody
-    public Category findById(Long id){
+    public Optional<Category> findById(Long id) {
         return categoryService.findById(id);
     }
-    @GetMapping("/update_category")
-    public String update(Category category, RedirectAttributes attributes){
+
+    @GetMapping("/update-category")
+    public String update(Category category, RedirectAttributes redirectAttributes) {
         try {
             categoryService.update(category);
-            attributes.addFlashAttribute("success","Chỉnh sửa thành công");
-        }catch (DataIntegrityViolationException e){
-            e.printStackTrace();
-            attributes.addFlashAttribute("failed", "Chỉnh sửa không thành công");
-        }catch (Exception e){
-            e.printStackTrace();
-            attributes.addFlashAttribute("failed", "Error server");
+            redirectAttributes.addFlashAttribute("success", "Cập nhật thành công!");
+        } catch (DataIntegrityViolationException e1) {
+            e1.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Lỗi trùng tên, vui lòng nhập lại!");
+        } catch (Exception e2) {
+            e2.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Lỗi");
         }
         return "redirect:/categories";
     }
-    @RequestMapping(value = "/delete_category", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String delete(Long id, RedirectAttributes attributes){
+
+
+    @RequestMapping(value = "/delete-category", method = {RequestMethod.GET, RequestMethod.PUT})
+    public String delete(Long id, RedirectAttributes redirectAttributes) {
         try {
             categoryService.deleteById(id);
-            attributes.addFlashAttribute("success", "Xóa thành công");
-        }catch (Exception e){
-            e.printStackTrace();
-            attributes.addFlashAttribute("failed", "Xóa không thành công");
+            redirectAttributes.addFlashAttribute("success", "Hủy kích hoạt thành công!");
+        } catch (DataIntegrityViolationException e1) {
+            e1.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Lỗi trùng tên, vui lòng nhập lại!");
+        } catch (Exception e2) {
+            e2.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Error server");
         }
         return "redirect:/categories";
     }
-    @RequestMapping(value = "/enable_category", method = {RequestMethod.PUT, RequestMethod.GET})
-    public String enable(Long id, RedirectAttributes attributes){
+
+    @RequestMapping(value = "/enable-category", method = {RequestMethod.PUT, RequestMethod.GET})
+    public String enable(Long id, RedirectAttributes redirectAttributes) {
         try {
             categoryService.enableById(id);
-            attributes.addFlashAttribute("success", "Khôi phục thành công");
-        }catch (Exception e){
-            e.printStackTrace();
-            attributes.addFlashAttribute("failed", "Không thành công");
+            redirectAttributes.addFlashAttribute("success", "Kích hoạt thành công!");
+        } catch (DataIntegrityViolationException e1) {
+            e1.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Lỗi trùng tên, vui lòng nhập lại!");
+        } catch (Exception e2) {
+            e2.printStackTrace();
+            redirectAttributes.addFlashAttribute("error", "Error server");
         }
         return "redirect:/categories";
     }
+
+
 }

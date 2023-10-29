@@ -1,71 +1,74 @@
 package com.ecommerce.library.service.impl;
 
+import com.ecommerce.library.dto.CategoryDto;
 import com.ecommerce.library.model.Category;
 import com.ecommerce.library.repository.CategoryRepository;
 import com.ecommerce.library.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Override
-    public List<Category> findAll() {
-        return categoryRepository.findAll();
-    }
+    private final CategoryRepository categoryRepository;
 
     @Override
     public Category save(Category category) {
-        try{
-            Category categorySave = new Category(category.getName());
-            return categoryRepository.save(categorySave);
-        }catch (Exception e){
-            e.printStackTrace();
-            return null;
-        }
+        Category categorySave = new Category();
+        categorySave.setName(category.getName());
+        categorySave.setActivated(true);
+        categorySave.setDeleted(false);
+        return categoryRepository.save(categorySave);
 
-    }
-
-    @Override
-    public Category findById(Long id) {
-        return categoryRepository.findById(id).get();
     }
 
     @Override
     public Category update(Category category) {
-        Category categoryUpdate = null;
-        try {
-            categoryUpdate= categoryRepository.findById(category.getId()).get();
-            categoryUpdate.setName(category.getName());
-            categoryUpdate.set_Activated(category.is_Activated());
-            categoryUpdate.set_Deleted(category.is_Deleted());
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        Category categoryUpdate = categoryRepository.getReferenceById(category.getId());
+        categoryUpdate.setName(category.getName());
         return categoryRepository.save(categoryUpdate);
+    }
+
+    @Override
+    public List<Category> findAllByActivatedTrue() {
+        return categoryRepository.findAllByActivatedTrue();
+    }
+
+    @Override
+    public List<Category> findALl() {
+        return categoryRepository.findAll();
+    }
+
+    @Override
+    public Optional<Category> findById(Long id) {
+        return categoryRepository.findById(id);
     }
 
     @Override
     public void deleteById(Long id) {
         Category category = categoryRepository.getById(id);
-        category.set_Deleted(true);
-        category.set_Activated(false);
+        category.setActivated(false);
+        category.setDeleted(true);
         categoryRepository.save(category);
     }
 
     @Override
     public void enableById(Long id) {
         Category category = categoryRepository.getById(id);
-        category.set_Activated(true);
-        category.set_Deleted(false);
+        category.setActivated(true);
+        category.setDeleted(false);
         categoryRepository.save(category);
     }
 
     @Override
-    public List<Category> findAllByActivated() {
-        return categoryRepository.findAllByActivated();
+    public List<CategoryDto> getCategoriesAndSize() {
+        List<CategoryDto> categories = categoryRepository.getCategoriesAndSize();
+        return categories;
     }
+
 }
+
+

@@ -1,23 +1,20 @@
 package com.ecommerce.library.dto;
 
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Size;
-
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class AdminDto {
-    @Size(min = 3, max = 10, message = "Invalid first name!(3-10 characters)")
+    @Size(min = 3, max = 10, message = "First name contains 3-10 characters")
     private String firstName;
-    @Size(min = 3, max = 10, message = "Invalid first name!(3-10 characters)")
+    @Size(min = 3, max = 10, message = "Last name contains 3-10 characters")
     private String lastName;
-
-    private String userName;
-    @Size(min = 5, max = 15, message = "Invalid password !(5-15 characters)")
-    private String passWord;
-
-    private String repPassWord;
+    private String username;
+    @Size(min = 5, max = 10, message = "Password contains 5-10 characters")
+    private String password;
+    private String repeatPassword;
 }

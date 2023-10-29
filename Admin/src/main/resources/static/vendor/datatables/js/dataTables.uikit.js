@@ -7,7 +7,7 @@
 (function( factory ){
 	if ( typeof define === 'function' && define.amd ) {
 		// AMD
-		define( ['jquery', 'datatables.net'], function ( $ ) {
+		define( ['static/vendor/datatables/js/jquery', 'datatables.net'], function ($ ) {
 			return factory( $, window, document );
 		} );
 	}

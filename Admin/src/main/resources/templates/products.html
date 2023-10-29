@@ -1,113 +1,122 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org/">
+<html lang="en" xmlns:th = "https://www.thymeleaf.org/">
 
-<head th:replace="fragments :: header">
+<head th:replace = "~{fragments::header}">
+
 </head>
+
 <body id="page-top">
-<!-- Page Wrapper -->
-<div id="wrapper">
-    <!-- Sidebar -->
-    <ul th:replace="fragments :: sidebar">
-    </ul>
-    <!-- End of Sidebar -->
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
 
-        <!-- Main Content -->
-        <div id="content">
+        <!-- Sidebar -->
+        <ul th:replace = "~{fragments::sidebar}">
+        </ul>
+        <!-- End of Sidebar -->
 
-            <!-- Topbar -->
-            <nav th:replace="fragments :: topbar"></nav>
-            <!-- End of Topbar -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
 
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-                <div>
-                    <form th:action="@{/search_result/0}" method="get">
-                        <input type="text" id="search" name="keyword" placeholder="Search products">
-                        <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                    </form>
-                </div>
-                <div th:if="${size == 0}">
-                    <p>Không có món ắn nào</p>
-                </div>
-                <div th:if="${success}" class="text-center alert alert-success">
-                    <p th:text="${success}"></p>
-                </div>
-                <div th:if="${failed}" class="text-center alert alert-danger">
-                    <p th:text="${failed}"></p>
-                </div>
-                <a th:href="@{/add_product}" class="btn btn-primary" >Thêm mới món ăn</a>
-                <table class="table table-striped" th:if="${size >0}">
-                    <thead>
-                    <tr>
-                        <th scope="col">Tên</th>
-                        <th scope="col">Loại</th>
-                        <th scope="col">Giá</th>
-                        <th scope="col">Chất lượng</th>
-                        <th scope="col">Hình ảnh</th>
-                        <th scope="col">Chỉnh sửa</th>
-                        <th scope="col">Thao tác</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="product : ${products}">
-                        <th scope="row" th:text="${product.name}"></th>
-                        <td th:text="${product.category.name}"></td>
-                        <td th:text="${product.costPrice}"></td>
-                        <td th:text="${product.currentQuantity}"></td>
-                        <td><img style="height: 40px; width: 40px;" th:src="*{'data:image/jpeg;base64,'+ {product.image}}"></td>
-                        <td><a th:href="@{/update_product/{id} (id = ${product.id})}" class="btn btn-primary"> Chỉnh sửa</a></td>
-                        <td>
-                            <a class="btn btn-primary" th:if="${product.is_Activated == false && product.is_Deleted == true}" th:href="@{enable_product/{id} (id = ${product.id})}">Kích hoạt</a>
-                            <a class="btn btn-danger" th:if="${product.is_Activated == true && product.is_Deleted == false}" th:href="@{delete_product/{id} (id = ${product.id})}">Hủy kích hoạt</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <!-- Main Content -->
+            <div id="content">
 
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination">
-                        <li th:if = "${currentPage != 0}" class="page-item">
-                            <a th:href="@{'/products/' + ${currentPage - 0}}" class="page-link" href="#">Trước</a>
-                        </li>
-                        <li th:each = "i : ${#numbers.sequence(1, totalPages)}" th:classappend="${currentPage == i - 1 ? 'active' : ''}" class="page-item">
-                            <a th:href="@{'/products/' + ${i - 1}}" class="page-link" href="#"><span th:text = "${i}"></span></a>
-                        </li>
-                        <li th:if = "${currentPage + 1 != totalPages}" class="page-item">
-                            <a th:href="@{'/products/' + ${currentPage + 1}}" class="page-link" href="#">Sau</a>
-                        </li>
-                    </ul>
+                <!-- Topbar -->
+                <nav th:replace = "~{fragments::top-navbar}">
                 </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+                    <div class="input-group" style="width: 30%; margin-bottom: 20px;">
+                        <form th:action = "@{/search-products/0}" method = "get">
+                            <input type="text" class="form-control rounded" placeholder="Search" name = "keyword" aria-label="Tìm kiếm"
+                                   aria-describedby="search-addon" />
+                            <button type="submit" class="btn btn-outline-primary">Tìm kiếm</button>
+                        </form>
+                    </div>
+                    <a th:href="@{/add-product}" class = "btn btn-primary">Thêm món ăn</a>
+                    <p th:if="${size == 0} ">Không</p>
+                    <div th:if = "${success}" class = "text-center alert alert-success">
+                        <p th:text = "${success}"></p>
+                    </div>
+                    <div th:if = "${error}" class="text-center alert alert-danger">
+                        <p th:text = "${error}"></p>
+                    </div>
+                    <table class="table table-bordered" th:if = "${size > 0}">
+                        <thead>
+                        <tr>
+                            <th scope="col">Tên món ăn</th>
+                            <th scope="col">Loại</th>
+                            <th scope="col">Giá</th>
+                            <th scope="col">Số lượng</th>
+                            <th scope="col">Ảnh</th>
+                            <th scope="col">Chỉnh sửa</th>
+                            <th scope="col">Thao tác</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each = "product : ${products}">
+                            <th scope="row" th:text = "${product.name}"></th>
+                            <td th:text = "${product.category.name}"></td>
+                            <td th:text = "${product.costPrice}"></td>
+                            <td th:text = "${product.currentQuantity}"></td>
+                            <td>
+                                <img class = "my-product-image" style="height: 40px; width: 40px;" alt=""
+                                     th:src="'data:image/jpeg;base64,' + ${product.image}">
+                            </td>
+                            <td><a th:href="@{/update-product/{id}(id= ${product.id})}" class="btn btn-primary">Chỉnh sửa</a></td>
+                            <td>
+                                <a th:if="${product.deleted} == true" th:href="@{/enable-product(id = ${product.id})}"
+                                   class="btn btn-primary">Kích hoạt</a>
+                                <a th:if="${product.deleted} == false" th:href="@{/delete-product(id = ${product.id})}"
+                                   class=" btn btn-danger">Hủy kích hoạt</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+
+                    <!--Pagination  -->
+                    <nav aria-label="...">
+                        <ul class="pagination" >
+                            <li th:if= "${currentPage != 0}" class="page-item ">
+                                <a th:href = "@{'/products/' + ${currentPage - 1}}" class="page-link">Trước</a>
+                            </li >
+                            <li th:each = "i : ${#numbers.sequence(1, totalPages)}" th:classappend = "${currentPage == i - 1 ? 'active' : ''}" class="page-item">
+                                <a th:href = "@{'/products/' + ${i - 1}}" class="page-link" href="#">
+				     <span th:text = "${i}">
+				     </span></a></li>
+                            <li th:if = "${currentPage + 1 != totalPages}" class="page-item">
+                                <a th:href = "@{'/products/' + ${currentPage + 1}}" class="page-link" href="#">Sau</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <!--Pagination  -->
+                </div>
+                <!-- /.container-fluid -->
 
             </div>
-            <!-- /.container-fluid -->
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer th:replace = "~{fragments::footer}">
+            </footer>
+            <!-- End of Footer -->
 
         </div>
-        <!-- End of Main Content -->
-
-        <!-- Footer -->
-        <footer th:replace="fragments :: footer">
-        </footer>
-        <!-- End of Footer -->
+        <!-- End of Content Wrapper -->
 
     </div>
-    <!-- End of Content Wrapper -->
+    <!-- End of Page Wrapper -->
 
-</div>
-<!-- End of Page Wrapper -->
+    <!-- Scroll to Top Button-->
+    <a th:replace = "~{fragments::scroll}">
+    </a>
 
-<!-- Scroll to Top Button-->
-<a th:replace="fragments :: scroll">
-</a>
 
-<!-- Logout Modal-->
-
-<!-- Bootstrap core JavaScript-->
-<div th:replace="fragments :: script"></div>
-<script th:src="@{/js/categories.js}"></script>
-
+    <!-- Bootstrap core JavaScript-->
+    <div th:replace = "~{fragments::script}"></div>
 </body>
 
 </html>

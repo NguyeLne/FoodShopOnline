@@ -10,29 +10,26 @@ import java.nio.file.StandardCopyOption;
 
 @Component
 public class ImageUpload {
-    private final String UPLOAD_FORDER = "D:\\springboot-ecommerce-step-by-step-main\\springboot-ecommerce-step-by-step-main\\Beta1\\Ecommerce-Springboot\\Admin\\src\\main\\resources\\static\\img\\image_product";
-    public boolean uploadImage(MultipartFile imageProduct){
+    private final String UPLOAD_FOLDER = "D:\\lastest\\Alpha1\\Admin\\src\\main\\resources\\static\\img\\image_product";
+    public boolean uploadFile(MultipartFile file) {
         boolean isUpload = false;
         try {
-            Files.copy(imageProduct.getInputStream(),
-                    Paths.get(UPLOAD_FORDER+ File.separator,
-                    imageProduct.getOriginalFilename()),
-                    StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(file.getInputStream(), Paths.get(UPLOAD_FOLDER + File.separator + file.getOriginalFilename()) , StandardCopyOption.REPLACE_EXISTING);
             isUpload = true;
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return isUpload;
     }
 
-    public boolean checkExisted(MultipartFile imageProduct){
-        boolean isExisted = false;
+    public boolean checkExist(MultipartFile multipartFile){
+        boolean isExist = false;
         try {
-            File file = new File(UPLOAD_FORDER + "\\" + imageProduct.getOriginalFilename());
-            isExisted = file.exists();
+           File file = new File(UPLOAD_FOLDER +"\\" + multipartFile.getOriginalFilename());
+           isExist = file.exists();
         }catch (Exception e){
             e.printStackTrace();
         }
-        return isExisted;
+        return isExist;
     }
 }
