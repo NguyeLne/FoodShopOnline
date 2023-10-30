@@ -31,7 +31,8 @@
 </div>
 <!-- End Slider -->
 
-<!-- Start Products  -->
+<!--// TEST-->
+<!-- Start Products-->
 <div class="products-box">
     <div class="container" th:each="category : ${categories}">
         <div class="row">
@@ -53,8 +54,8 @@
         </div>
         <div class="row special-list">
             <div class="col-lg-3 col-md-6 special-grid" th:each="product : ${products}"
-                 th:if="${category.name == product.category.name}">
-                <form th:action="@{/add-to-cart}" method="post">
+                 th:if="${product.category.name == category.name}">
+<!--                <form th:action="@{/add-to-cart}" method="post">-->
                     <div class="products-single fix">
                         <div class="box-img-hover">
                             <img th:src="'data:image/jpeg;base64,' + ${product.image}" class="img-fluid" alt="Image">
@@ -70,16 +71,16 @@
                         </div>
                         <div class="why-text">
                             <h4 th:text="${product.name}"></h4>
-                            <h5 th:text="'$' + ${product.costPrice}"></h5>
+                            <h5 th:text="'Đôla' + ${product.costPrice}"></h5>
                         </div>
                     </div>
-                </form>
+<!--                </form>-->
             </div>
         </div>
     </div>
 </div>
 
-<!-- End Products  -->
+<!-- End Products-->
 
 
 <!-- Start Feed  -->

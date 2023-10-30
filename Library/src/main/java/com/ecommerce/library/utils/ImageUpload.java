@@ -7,7 +7,6 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-
 @Component
 public class ImageUpload {
     private final String UPLOAD_FOLDER = "D:\\lastest\\Alpha1\\Admin\\src\\main\\resources\\static\\img\\image_product";

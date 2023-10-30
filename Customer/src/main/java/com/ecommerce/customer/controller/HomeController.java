@@ -28,8 +28,8 @@ public class HomeController {
     public String index(Model model){
         model.addAttribute("page", "Products");
         model.addAttribute("title", "Menu");
-        List<Category> categories = categoryService.findAllByActivatedTrue();
-        List<ProductDto> products = productService.products();
+        List<Category> categories = categoryService.findALl();
+        List<ProductDto> products = productService.allProduct();
         model.addAttribute("products", products);
         model.addAttribute("categories", categories);
         return "index";

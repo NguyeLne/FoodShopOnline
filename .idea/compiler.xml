@@ -8,12 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Alpha1" />
-        <module name="Ecommerce_Lastest_Ver" />
-        <module name="Customer" />
         <module name="Library" />
-        <module name="Alpha1_2610" />
+        <module name="Ecommerce_Lastest_Ver" />
         <module name="Admin" />
-        <module name="FoodShopOnline" />
+        <module name="Alpha1_2710" />
+        <module name="Customer" />
       </profile>
     </annotationProcessing>
   </component>
