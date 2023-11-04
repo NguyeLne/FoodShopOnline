@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AdminDto {
-    @Size(min = 3, max = 10, message = "First name contains 3-10 characters")
+    @Size(min = 3, max = 10, message = "Họ phải trong khoảng 3 - 10 từ")
     private String firstName;
-    @Size(min = 3, max = 10, message = "Last name contains 3-10 characters")
+    @Size(min = 3, max = 10, message = "Tên phải trong khoảng 3 - 10 từ")
     private String lastName;
     private String username;
-    @Size(min = 5, max = 10, message = "Password contains 5-10 characters")
+    @Size(min = 5, max = 10, message = "Mật khẩu phải chứa ít nhất 5 ký tự")
     private String password;
     private String repeatPassword;
 }

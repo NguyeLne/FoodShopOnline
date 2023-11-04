@@ -11,7 +11,6 @@
         <module name="Library" />
         <module name="Ecommerce_Lastest_Ver" />
         <module name="Admin" />
-        <module name="Alpha1_2710" />
         <module name="Customer" />
       </profile>
     </annotationProcessing>

@@ -44,17 +44,18 @@
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="our-link">
                     <ul>
-                        <li><a href="#"> Call US : xxxxxxxxxxxxxxxxxx</a></li>
-                        <li><a href="#"><i class="fas fa-location-arrow"></i> Address: </a></li>
+                        <li><a href="#"> Liên hệ : xxxxxxxxxxxxxxxxxx</a></li>
+                        <li><a href="#"><i class="fas fa-location-arrow"></i> Địa chỉ cửa hàng : </a></li>
                     </ul>
                 </div>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div class="login-box">
                     <select id="basic" class="selectpicker show-tick form-control" data-placeholder="Sign In" onchange="location = this.value;">
-                        <option>Authentication</option>
-                        <option th:if = "${session.username == null}" value = "http://localhost:8889/shop/login"> Đăng nhập </option>
-                        <option th:if = "${session.username == null}" value ="http://localhost:8889/shop/register">Đăng kí</option>
+                        <option th:text="${session.username != null} ? ${session.username} : 'Tài khoản'"></option>
+                        <option th:if = "${session.username == null}" value = "http://localhost:8020/shop/login"> Đăng nhập </option>
+                        <option th:if = "${session.username == null}" value ="http://localhost:8020/shop/register">Đăng kí</option>
+                        <option th:if = "${session.username != null}" value = "http://localhost:8020/shop/logout">Đăng xuất</option>
                     </select>
                 </div>
                 <div class="text-slid-box">
@@ -104,21 +105,22 @@
                         aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa fa-bars"></i>
                 </button>
-                <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/logo.png}" class="logo" width="130"
-                                                            height="80" alt=""></a>
+                <a class="navbar-brand" th:href="@{/}"><img th:src="@{/images/img.png}" class="logo" width="90"
+                                                            height="90" alt=""></a>
             </div>
             <!-- End Header Navigation -->
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="navbar-menu">
                 <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
-                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Trang chủ</a></li>
+                    <li  class="nav-item"><a class="nav-link" th:href="@{/}">Trang chủ</a></li>
                     <li class="nav-item"><a class="nav-link" th:href="@{/menu}">Menu</a></li>
 
                     <li class="dropdown">
-                        <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Cửa hàng</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cửa hàng</a>
+                        <img src="">
                         <ul class="dropdown-menu">
-                            <li><a th:href="@{/shop-detail}">Thông tin</a></li>
+                            <li><a th:href="@{/shop-detail}">Của hàng</a></li>
                             <li><a th:href="@{/orders}">Đơn đặt</a></li>
                             <li><a th:href="@{/profile}">Tài khoản của tôi</a></li>
                         </ul>
@@ -131,13 +133,11 @@
             <!-- Start Atribute Navigation -->
             <div class="attr-nav2">
                 <ul>
-                    <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                    <li class="search"><a th:href="@{index}"><strong>Trang chủ</strong></a></li>
                     <li class="side-menu">
-                        <a href="#" th:href="@{/cart}">
-                            <i class="fa fa-shopping-bag"></i>
-                            <span class="badge"
-                                  th:text="${session.totalItems == null} ? '0' : ${session.totalItems}"></span>
-                            <p>My Cart</p>
+                        <a th:href="@{/cart}">
+                            <span class="badge" th:text = "${session.totalItems == null} ? '0' : ${session.totalItems}"></span>
+                            <p>Giỏ hàng của tôi</p>
                         </a>
                     </li>
                 </ul>
@@ -168,7 +168,7 @@
             <div class="col-lg-12">
                 <h2 th:text="${page}"></h2>
                 <ul class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="home.html">Ocean Prime</a></li>
+                    <li class="breadcrumb-item"><a th:href="@{/index}">Food Shop</a></li>
                     <li class="breadcrumb-item active" th:text="${page}"></li>
                 </ul>
             </div>
@@ -182,41 +182,41 @@
     <div class="main-instagram owl-carousel owl-theme">
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Fish 01 - Fish Tacos.jpg}" alt=""/></a>
+                <a th:href="@{/home}" href="index.html"><img th:src="@{/images/Fish 01 - Fish Tacos.jpg}" alt=""/></a>
 
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <img th:src="@{/images/instagram-img-02.jpg}" alt=""/>
+                <img th:href="@{/home}" th:src="@{/images/instagram-img-02.jpg}" alt=""/>
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Fish 04 - Red Pepper & Parmesan Tilapia.jpg}" alt=""/></a>
+                <a th:href="@{/home}" href="index.html"><img th:src="@{/images/Fish 04 - Red Pepper & Parmesan Tilapia.jpg}" alt=""/></a>
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Fish 05 - Almond-Topped Fish.jpg}" alt=""/></a>
+                <a th:href="@{/home}" href="index.html"><img th:src="@{/images/Fish 05 - Almond-Topped Fish.jpg}" alt=""/></a>
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Shrimp 03 - Shrimp Tostadas with Avocado Salsa.jpg}"
+                <a th:href="@{/home}" href="index.html"><img th:src="@{/images/Shrimp 03 - Shrimp Tostadas with Avocado Salsa.jpg}"
                                           alt=""/></a>
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img th:src="@{/images/Shrimp 08 - Grilled Shrimp and Chorizo Appetizers.jpg}"
+                <a th:href="@{/home}" href="index.html"><img th:src="@{/images/Shrimp 08 - Grilled Shrimp and Chorizo Appetizers.jpg}"
                                           alt=""/></a>
             </div>
         </div>
         <div class="item">
             <div class="ins-inner-box">
-                <a href="index.html"><img
-                        th:src="@{/images/Octopus 06 - Red Wine–Braised Baby Octopus with Black Olives.jpg}"
+                <a th:href="@{/home}" href="index.html"><img
+                        th:src="@{/images/Octopus 06 - Red Wine_Braised Baby Octopus with Black Olives.jpg}"
                         alt=""/></a>
             </div>
         </div>
@@ -233,9 +233,9 @@
             <div class="row">
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-top-box">
-                        <h3>Business Time</h3>
+                        <h3>Giờ làm việc</h3>
                         <ul class="list-time">
-                            <li>Bất kì thời gian</li>
+                            <li>Đoán xem !</li>
                         </ul>
                     </div>
                 </div>
@@ -243,16 +243,16 @@
                     <div class="footer-top-box">
                         <h3>Contact Us</h3>
                         <ul class="list-time">
-                            <li><i class="fas fa-phone-square"></i> Phone number: </li>
-                            <li><i class="fas fa-envelope"></i> Email: abc@gmail.com</li>
-                            <li><i class="fas fa-map-marker-alt"></i> Address: XXXXXXXX</li>
+                            <li><i class="fas fa-phone-square"></i> Điện thoại: </li>
+                            <li><i class="fas fa-envelope"></i> Email:soicodon@gmail.com</li>
+                            <li><i class="fas fa-map-marker-alt"></i> Địa chỉ: XXXXXXXX</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12 col-sm-12">
                     <div class="footer-top-box">
                         <h3>Media</h3>
-                        <p>Come with shop - Only Fresh </p>
+                        <p>Come with shop Only Food </p>
                         <ul>
                             <li><a href="#"><i class="fab fa-facebook" aria-hidden="true"></i></a></li>
                             <li><a href="#"><i class="fab fa-twitter" aria-hidden="true"></i></a></li>
@@ -285,21 +285,7 @@
     <script th:src="@{/js/form-validator.min.js}"></script>
     <script th:src="@{/js/contact-form-script.js}"></script>
     <script th:src="@{/js/custom.js}"></script>
-<!--    <script src="js/jquery-3.2.1.min.js"></script>-->
-<!--    <script src="js/popper.min.js"></script>-->
-<!--    <script src="js/bootstrap.min.js"></script>-->
-<!--    &lt;!&ndash; ALL PLUGINS &ndash;&gt;-->
-<!--    <script src="js/jquery.superslides.min.js"></script>-->
-<!--    <script src="js/bootstrap-select.js"></script>-->
-<!--    <script src="js/inewsticker.js"></script>-->
-<!--    <script src="js/bootsnav.js."></script>-->
-<!--    <script src="js/images-loded.min.js"></script>-->
-<!--    <script src="js/isotope.min.js"></script>-->
-<!--    <script src="js/owl.carousel.min.js"></script>-->
-<!--    <script src="js/baguetteBox.min.js"></script>-->
-<!--    <script src="js/form-validator.min.js"></script>-->
-<!--    <script src="js/contact-form-script.js"></script>-->
-<!--    <script src="js/custom.js"></script>-->
+
 </div>
 </body>
 </html>

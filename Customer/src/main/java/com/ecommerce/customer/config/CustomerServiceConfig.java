@@ -2,7 +2,6 @@ package com.ecommerce.customer.config;
 
 import com.ecommerce.library.model.Customer;
 import com.ecommerce.library.repository.CustomerRepository;
-import org.hibernate.query.sql.internal.ParameterRecognizerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,12 +14,11 @@ import java.util.stream.Collectors;
 public class CustomerServiceConfig implements UserDetailsService {
     @Autowired
     private CustomerRepository customerRepository;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Customer customer = customerRepository.findByUsername(username);
         if(customer == null){
-            throw new UsernameNotFoundException("Could not find username");
+            throw new UsernameNotFoundException("Tài khoản không tồn tại !");
         }
         return new User(customer.getUsername(),
                 customer.getPassword(),
