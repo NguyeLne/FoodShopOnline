@@ -1,6 +1,7 @@
 package com.ecommerce.library.service.impl;
 
 import com.ecommerce.library.dto.CustomerDto;
+import com.ecommerce.library.model.Admin;
 import com.ecommerce.library.model.Customer;
 import com.ecommerce.library.repository.CustomerRepository;
 import com.ecommerce.library.repository.RoleRepository;
@@ -9,12 +10,19 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final RoleRepository roleRepository;
+
+    @Override
+    public List<Customer> AllAccount() {
+        List<Customer> customers = customerRepository.findAll();
+        return customers;
+    }
 
     @Override
     public Customer save(CustomerDto customerDto) {

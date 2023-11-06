@@ -22,10 +22,7 @@ public class ProductController {
     @Autowired
     private CategoryService categoryService;
 
-    @GetMapping("/products")
-    public String products(Model model){
-        return "shop";
-    }
+
     @GetMapping("/menu")
     public String index(Model model){
         model.addAttribute("page", "Sản phẩm");
