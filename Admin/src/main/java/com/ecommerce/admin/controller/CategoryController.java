@@ -27,7 +27,7 @@ public class CategoryController {
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
             return "redirect:/login";
         }
-        model.addAttribute("title", "Quản lý Cate");
+        model.addAttribute("title", "Quản lý loại hàng");
         List<Category> categories = categoryService.findALl();
         model.addAttribute("categories", categories);
         model.addAttribute("size", categories.size());

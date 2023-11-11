@@ -1,7 +1,9 @@
 package com.ecommerce.library.service.impl;
 
 import com.ecommerce.library.dto.AdminDto;
+import com.ecommerce.library.dto.CustomerDto;
 import com.ecommerce.library.model.Admin;
+import com.ecommerce.library.model.Customer;
 import com.ecommerce.library.repository.AdminRepository;
 import com.ecommerce.library.repository.RoleRepository;
 import com.ecommerce.library.service.AdminService;
@@ -39,4 +41,11 @@ public class AdminServiceImpl implements AdminService {
         List<Admin> admins = adminRepository.findAll();
         return admins;
     }
+
+    @Override
+    public void deleteAccount(Long id) {
+        adminRepository.deleteById(id);
+    }
+
+
 }

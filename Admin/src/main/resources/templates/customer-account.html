@@ -37,8 +37,12 @@
                     <th scope="col">Họ </th>
                     <th scope="col">Tên </th>
                     <th scope="col">Tài khoản</th>
+                    <th scope="col">Địa chỉ</th>
+                    <th scope="col">Thành phố </th>
+                    <th scope="col">Mã quốc gia </th>
+                    <th scope="col">Số điện thoại</th>
                     <th scope="col">Sửa</th>
-                    <th scope="col">Thao tác</th>
+<!--                    <th scope="col">Thao tác</th>-->
                 </tr>
                 </thead>
                 <tbody>
@@ -47,12 +51,14 @@
                     <td th:text="${customer.firstName}"></td>
                     <td th:text="${customer.lastName}"></td>
                     <td th:text="${customer.username}"></td>
-                    <td>
-                        <a class="btn btn-warning">Cập nhật</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-danger">Xóa</a>
-                    </td>
+                    <td th:text="${customer.address}"></td>
+                    <td th:text="${customer.city.name}"></td>
+                    <td th:text="${customer.country}"></td>
+                    <td th:text="${customer.phoneNumber}"></td>
+                    <td><a th:href="@{/update-customer/{username}(username= ${customer.username})}" class="btn btn-warning">Chỉnh sửa</a></td>
+<!--                    <td>-->
+<!--                        <a th:href="@{/delete-customer(id = ${customer.id})}" class="btn btn-danger">Xóa</a>-->
+<!--                    </td>-->
                 </tr>
                 </tbody>
             </table>

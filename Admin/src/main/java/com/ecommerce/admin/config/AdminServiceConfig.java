@@ -19,7 +19,7 @@ public class AdminServiceConfig implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Admin admin = adminRepository.findByUsername(username);
         if (admin == null) {
-            throw new UsernameNotFoundException("Could not find username");
+            throw new UsernameNotFoundException("Không tìm thấy tài khoản");
         }
         return new User(
                 admin.getUsername(),

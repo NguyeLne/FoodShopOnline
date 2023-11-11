@@ -1,8 +1,10 @@
 package com.ecommerce.library.service.impl;
 
 import com.ecommerce.library.dto.CustomerDto;
+import com.ecommerce.library.dto.ProductDto;
 import com.ecommerce.library.model.Admin;
 import com.ecommerce.library.model.Customer;
+import com.ecommerce.library.model.Product;
 import com.ecommerce.library.repository.CustomerRepository;
 import com.ecommerce.library.repository.RoleRepository;
 import com.ecommerce.library.service.CustomerService;
@@ -55,6 +57,8 @@ public class CustomerServiceImpl implements CustomerService {
         return customerDto;
     }
 
+
+
     @Override
     public Customer changePass(CustomerDto customerDto) {
         Customer customer = customerRepository.findByUsername(customerDto.getUsername());
@@ -71,5 +75,9 @@ public class CustomerServiceImpl implements CustomerService {
         customer.setPhoneNumber(dto.getPhoneNumber());
         return customerRepository.save(customer);
     }
-
+    ///
+    @Override
+    public void deleteAccountC(Long id) {
+        customerRepository.deleteById(id);
+    }
 }
