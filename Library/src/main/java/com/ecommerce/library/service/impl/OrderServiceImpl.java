@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
         order.setTax(2);
         order.setTotalPrice(shoppingCart.getTotalPrice());
         order.setAccept(false);
-        order.setPaymentMethod("Tiền mặt");
+        order.setPaymentMethod("Thanh toán khi nhận hàng");
         order.setOrderStatus("Đang xử lý");
         order.setQuantity(shoppingCart.getTotalItems());
         List<OrderDetail> orderDetailList = new ArrayList<>();
